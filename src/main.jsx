@@ -7,6 +7,8 @@ import {
 import './index.css'
 import LoginPage from './pages/Login.page.jsx';
 import RegisterPage from './pages/Register.page.jsx';
+import SpielPage from './pages/Spiel.page.jsx';
+import Navbar from './components/navbar.component.jsx';
 
 const router = createBrowserRouter([
   {
@@ -17,10 +19,15 @@ const router = createBrowserRouter([
     path: "/Register",
     element: <RegisterPage />
   },
+  {
+    path: "/Spiel",
+    element: <SpielPage />
+  },
 ]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <Navbar/>
     <RouterProvider router={router} />
   </StrictMode>,
 )

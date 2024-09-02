@@ -11,8 +11,9 @@ import globalStyles from './globalStyles.jsx'; // Stelle sicher, dass der Import
 // Importiere die Seiten und Komponenten
 import LoginPage from './pages/Login.page.jsx';
 import RegisterPage from './pages/Register.page.jsx';
-import Navbar from './components/Navbar.jsx';
 import About from './components/About';
+import SpielPage from './pages/Spiel.page.jsx';
+import Navbar from './components/navbar.component.jsx';
 
 // Router-Konfiguration
 const router = createBrowserRouter([
@@ -56,11 +57,16 @@ const router = createBrowserRouter([
       </>
     )
   },
+  {
+    path: "/Spiel",
+    element: <SpielPage />
+  },
 ]);
 
 // React-Rendering
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <Navbar/>
     <RouterProvider router={router} />
   </StrictMode>
 );

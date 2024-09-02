@@ -11,21 +11,6 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Hier kannst du deine Login-Logik einfügen
-    // Zum Beispiel: API-Aufruf zur Authentifizierung
-
-    try {
-      // Dummy-Login-Überprüfung
-      if (email === 'user@example.com' && password === 'password') {
-        // Erfolgreiches Login
-        navigate('/about'); // Weiterleitung nach dem Login
-      } else {
-        // Fehlerhafte Anmeldeinformationen
-        setError('Invalid email or password.');
-      }
-    } catch (err) {
-      setError('An error occurred. Please try again.');
-    }
   };
 
   return (
@@ -71,7 +56,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  height: 100vh;
   background-color: rgba(245, 232, 232, 1);
 `;
 
@@ -117,7 +102,7 @@ const SubmitButton = styled.button`
   font-size: 16px;
   margin-top: 10px;
   &:hover {
-    background-color: rgba(237, 84, 29, 1);
+    background-color: rgba(202, 180, 239, 1);
   }
 `;
 

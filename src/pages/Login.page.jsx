@@ -71,7 +71,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  height: calc(100vh - 75px);
   background-color: rgba(245, 232, 232, 1);
 `;
 

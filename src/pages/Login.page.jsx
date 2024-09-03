@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
@@ -14,14 +13,14 @@ const LoginPage = () => {
   };
 
   return (
-    <Container>
-      <FormContainer>
-        <FormTitle>Login</FormTitle>
+    <div className="flex justify-center items-center h-screen bg-red-50">
+      <div className="p-10 bg-white w-96 rounded-lg shadow-md">
+        <h2 className="text-center mb-6 text-gray-800 text-2xl">Login</h2>
         <form onSubmit={handleSubmit}>
-          {error && <ErrorMessage>{error}</ErrorMessage>}
-          <FormGroup>
-            <FormLabel htmlFor="email">E-mail</FormLabel>
-            <FormInput
+          {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
+          <div className="mb-4">
+            <label htmlFor="email" className="block mb-2 text-gray-600">E-mail</label>
+            <input
               type="email"
               id="email"
               name="email"
@@ -29,11 +28,12 @@ const LoginPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              className="w-full p-2 border border-gray-300 rounded-md"
             />
-          </FormGroup>
-          <FormGroup>
-            <FormLabel htmlFor="password">Password</FormLabel>
-            <FormInput
+          </div>
+          <div className="mb-4">
+            <label htmlFor="password" className="block mb-2 text-gray-600">Password</label>
+            <input
               type="password"
               id="password"
               name="password"
@@ -41,77 +41,19 @@ const LoginPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              className="w-full p-2 border border-gray-300 rounded-md"
             />
-          </FormGroup>
-          <SubmitButton type="submit">Login</SubmitButton>
-         
+          </div>
+          <button
+            type="submit"
+            className="w-full p-2 bg-teal-400 text-white rounded-md hover:bg-purple-300 transition-colors mt-4"
+          >
+            Login
+          </button>
         </form>
-      </FormContainer>
-    </Container>
+      </div>
+    </div>
   );
 };
-
-// Styled Components
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: rgba(245, 232, 232, 1);
-`;
-
-const FormContainer = styled.div`
-  padding: 40px;
-  background-color: #fff;
-  width: 400px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-`;
-
-const FormTitle = styled.h2`
-  text-align: center;
-  margin-bottom: 20px;
-  color: #333;
-`;
-
-const FormGroup = styled.div`
-  margin-bottom: 15px;
-`;
-
-const FormLabel = styled.label`
-  display: block;
-  margin-bottom: 5px;
-  color: #555;
-`;
-
-const FormInput = styled.input`
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-`;
-
-const SubmitButton = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: rgba(132, 219, 210, 1);
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 10px;
-  &:hover {
-    background-color: rgba(202, 180, 239, 1);
-  }
-`;
-
-
-
-const ErrorMessage = styled.div`
-  color: red;
-  margin-bottom: 10px;
-  text-align: center;
-`;
 
 export default LoginPage;

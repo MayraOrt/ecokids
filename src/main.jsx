@@ -1,11 +1,13 @@
 import React from 'react';
+import './index.css';
+
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom';
-import './index.css';
+
 import globalStyles from './globalStyles.jsx'; // Stelle sicher, dass der Importpfad korrekt ist
 
 // Importiere die Seiten und Komponenten

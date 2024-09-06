@@ -14,6 +14,7 @@ import About from './components/About';
 import SpielPage from './pages/Spiel.page.jsx';
 import MainLayout from './Layouts/MainLayout.jsx';
 import DashboardPage from './pages/Dashboard.page.jsx';
+import NachhaltigkeitPage from './pages/Nachhaltigkeit.page.jsx';
 
 
 // Router-Konfiguration
@@ -63,6 +64,14 @@ const router = createBrowserRouter([
     element: (
       <MainLayout>
         <DashboardPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/Nachhaltigkeit",
+    element: (
+      <MainLayout>
+        <NachhaltigkeitPage />
       </MainLayout>
     ),
   },

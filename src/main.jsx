@@ -6,55 +6,74 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import './index.css';
-import globalStyles from './globalStyles.jsx'; // Stelle sicher, dass der Importpfad korrekt ist
 
 // Importiere die Seiten und Komponenten
 import LoginPage from './pages/Login.page.jsx';
 import RegisterPage from './pages/Register.page.jsx';
-import Navbar from './components/Navbar.jsx';
 import About from './components/About';
+import SpielPage from './pages/Spiel.page.jsx';
+import MainLayout from './Layouts/MainLayout.jsx';
+import DashboardPage from './pages/Dashboard.page.jsx';
+import NachhaltigkeitPage from './pages/Nachhaltigkeit.page.jsx';
+
 
 // Router-Konfiguration
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <>
-        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
-        <Navbar />
+      <MainLayout>
         <About />
-      </>
-    )
+      </MainLayout>
+    ),
   },
   {
     path: "/login",
     element: (
-      <>
-        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
-        <Navbar />
+      <MainLayout>
         <LoginPage />
-      </>
-    )
+      </MainLayout>
+    ),
   },
   {
     path: "/register",
     element: (
-      <>
-        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
-        <Navbar />
+      <MainLayout>
         <RegisterPage />
-      </>
-    )
+      </MainLayout>
+    ),
   },
   {
     path: "/about",
     element: (
-      <>
-        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
-        <Navbar />
+      <MainLayout>
         <About />
-      </>
-    )
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/Spiel",
+    element: (
+      <MainLayout>
+        <SpielPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/Dashboard",
+    element: (
+      <MainLayout>
+        <DashboardPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/Nachhaltigkeit",
+    element: (
+      <MainLayout>
+        <NachhaltigkeitPage />
+      </MainLayout>
+    ),
   },
 ]);
 

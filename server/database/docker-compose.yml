@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0        
+    container_name: mysql_oekohelden
+    environment:
+      MYSQL_ROOT_PASSWORD: toor   
+      MYSQL_DATABASE: oekohelden          
+      MYSQL_USER: user                    
+      MYSQL_PASSWORD: resu
+    ports:
+      - "3307:3306"         
+    volumes:
+      - ./db_data:/var/lib/mysql  
+    networks:
+      - oekohelden_network  
+  
+networks:
+  oekohelden_network:
+    driver: bridge

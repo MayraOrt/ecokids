@@ -6,7 +6,7 @@ function NachhaltigkeitPage() {
     const [isGameOpen, setIsGameOpen] = useState(false);
 
     return (
-        <div className="main-container bg-contain bg-cover flex flex-col items-center min-h-screen" style={{ backgroundImage: 'url(/src/assets/fondo.jpg)' }}>
+        <div className="main-container bg-cover flex flex-col items-center min-h-screen" style={{ backgroundImage: 'url(/src/assets/fondo.jpg)' }}>
             <h1 className="text-4xl font-bold text-red-500 w-full text-center pt-16">
                 Was ist Nachhaltigkeit?
             </h1>

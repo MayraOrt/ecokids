@@ -10,7 +10,7 @@ import './index.css';
 // Importiere die Seiten und Komponenten
 import LoginPage from './pages/Login.page.jsx';
 import RegisterPage from './pages/Register.page.jsx';
-import About from './components/About';
+import About from './components/About.jsx';
 import SpielPage from './pages/Spiel.page.jsx';
 import MainLayout from './Layouts/MainLayout.jsx';
 import DashboardPage from './pages/Dashboard.page.jsx';

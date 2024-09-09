@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Falls du React Router verwendest
 
-function DashboardPage(){
+function Mathe(){
     return(
         <div className="main-container bg-red-50 flex flex-col items-center min-h-screen">
            <div className="flex items-center justify-center w-full pt-10">
@@ -90,4 +90,4 @@ Textaufgaben und Problemlösungsstrategien
     )
 }
 
-export default DashboardPage
+export default Mathe

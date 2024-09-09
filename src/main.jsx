@@ -21,6 +21,8 @@ import Deutschzweite from './pages/Deutschzweite.jsx';
 import Deutschdritte from './pages/Deutschdritte.jsx';
 import Deutschvierte from './pages/Deutschvierte.jsx';
 
+import Mathe from './pages/Mathe.jsx';
+
 import BuchstabenSpiel from './pages/BuchstabenSpiel.jsx';
 import WoerterMatching from './pages/WoerterMatching.jsx';
 import Leseecke from './pages/Leseecke.jsx';
@@ -173,6 +175,17 @@ const router = createBrowserRouter([
         <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
         <Navbar />
         <Deutschvierte/>
+      </>
+    )
+  },
+
+  {
+    path: "/mathe",
+    element: (
+      <>
+        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
+        <Navbar />
+        <Mathe/>
       </>
     )
   },

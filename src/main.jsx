@@ -17,6 +17,9 @@ import Deutsch from './pages/Deutsch.jsx';
 import RegisterPage from './pages/Register.page.jsx';
 
 import Deutscherste from './pages/Deutscherste.jsx';
+import Deutschzweite from './pages/Deutschzweite.jsx';
+import Deutschdritte from './pages/Deutschdritte.jsx';
+import Deutschvierte from './pages/Deutschvierte.jsx';
 
 import BuchstabenSpiel from './pages/BuchstabenSpiel.jsx';
 import WoerterMatching from './pages/WoerterMatching.jsx';
@@ -136,6 +139,40 @@ const router = createBrowserRouter([
         <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
         <Navbar />
         <Arbeitsmaterialien/>
+      </>
+    )
+  },
+
+
+  {
+    path: "/deutschzweite",
+    element: (
+      <>
+        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
+        <Navbar />
+        <Deutschzweite/>
+      </>
+    )
+  },
+
+  {
+    path: "/deutschdritte",
+    element: (
+      <>
+        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
+        <Navbar />
+        <Deutschdritte/>
+      </>
+    )
+  },
+
+  {
+    path: "/deutschvierte",
+    element: (
+      <>
+        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
+        <Navbar />
+        <Deutschvierte/>
       </>
     )
   },

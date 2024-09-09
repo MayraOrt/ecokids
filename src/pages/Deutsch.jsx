@@ -33,8 +33,10 @@ function Deutsch() {
             Rechtschreibung, Satzbau, Silbentrennung
           </div>
         </Link>
+
         {/* Container 2 */}
-        <div className="border-2 border-red-600 shadow-md rounded-xl p-4 flex flex-col items-center text-stone-800">
+        <Link to="/deutschzweite" className="border-2 border-red-600 shadow-md rounded-xl p-4 flex flex-col items-center text-stone-800">
+
           <div className="flex gap-5 justify-between w-full font-bold text-2xl text-center">
             <div className="my-auto">
               Deutsch <br />
@@ -52,10 +54,11 @@ function Deutsch() {
             Rechtschreibung, Aufsätze schreiben, <br />
             Texte verstehen, Wortarten
           </div>
-        </div>
+        
+</Link>
 
         {/* Container 3 */}
-        <div className="border-2 border-red-600 shadow-md rounded-xl p-4 flex flex-col items-center text-stone-800">
+        <Link to="/deutschdritte"  className="border-2 border-red-600 shadow-md rounded-xl p-4 flex flex-col items-center text-stone-800">
           <div className="flex gap-5 justify-between w-full font-bold text-2xl text-center">
             <div className="my-auto">
               Deutsch <br />
@@ -73,10 +76,11 @@ function Deutsch() {
             Diktate, Lesen und Verstehen von Texten, <br />
             Wortschatz erweitern, Sprachspiele
           </div>
-        </div>
+       
+</Link>
 
         {/* Container 4 */}
-        <div className="border-2 border-black shadow-md rounded-xl p-4 flex flex-col items-center text-stone-800">
+        <Link to= "/deutschvierte" className="border-2 border-black shadow-md rounded-xl p-4 flex flex-col items-center text-stone-800">
           <div className="flex gap-5 justify-between w-full font-bold text-2xl text-center">
             <div className="my-auto">
               Deutsch <br />
@@ -94,7 +98,7 @@ function Deutsch() {
             komplexe Texte lesen und verstehen, <br />
             freies Schreiben, Textanalyse
           </div>
-        </div>
+        </Link>
 
       </div>
     </div>

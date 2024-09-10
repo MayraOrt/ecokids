@@ -49,7 +49,7 @@ Muster und Reihenfolgen, Problemlösungsfähigkeiten
           </div>
         </Link>
            
-        <Link to="/Mathematikerste" className="border-2 border-blue-400 shadow-md rounded-xl p-4 flex flex-col items-center text-stone-800">
+        <Link to="/Mathedritte" className="border-2 border-blue-400 shadow-md rounded-xl p-4 flex flex-col items-center text-stone-800">
         <div className="flex flex-col justify-between h-full w-full">
             <div className="flex gap-5 justify-between w-full font-bold text-2xl text-center">
               <div className="my-auto">

@@ -1,5 +1,4 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './index.css';
 
 import { StrictMode } from 'react';
@@ -187,11 +186,9 @@ const router = createBrowserRouter([
   {
     path: "/mathedritte",
     element: (
-      <>
-        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
-        <Navbar />
+      <MainLayout>
         <Mathedritte/>
-      </>
+      </MainLayout>      
     )
   },
 
@@ -199,11 +196,9 @@ const router = createBrowserRouter([
   {
     path: "/mathevierte",
     element: (
-      <>
-        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
-        <Navbar />
+      <MainLayout>
         <Mathevierte/>
-      </>
+      </MainLayout>      
     )
   },
 

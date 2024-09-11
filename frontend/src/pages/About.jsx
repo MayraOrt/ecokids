@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { SessionContext } from '../contexts/SessionContext';
 
 const About = () => {
+    const { isLoggedIn } = useContext(SessionContext);
+
     const handleLoginClick = () => {
       window.location.href = '/login';
     };
@@ -17,10 +20,10 @@ const About = () => {
             <br></br>
             für Schule & Nachhaltigkeit!
           </Title>
-          <ButtonContainer>
+          { !isLoggedIn && <ButtonContainer>
             <LoginButton className="login-button" onClick={handleLoginClick}>Login</LoginButton>
             <RegisterButton className="register-button" onClick={handleRegisterClick}>Register</RegisterButton>
-          </ButtonContainer>
+          </ButtonContainer> }
         </TextSection>
         <ImageSection>
           <StyledImage

@@ -1,10 +1,23 @@
 import './Navbar.component.css';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { SessionContext } from '../contexts/SessionContext';
 
 const Navbar = () => {
-    const isLoggedIn = false
+    const {isLoggedIn, setSession, session} = useContext(SessionContext); 
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+      localStorage.removeItem('ecotoken');
+      setSession({
+        active: false,
+        firstName: null,
+        lastName: null
+      })
+      navigate('/');
+    }
+
     return (
       <nav className="menu-container">
         <div className="navbar-logo">
@@ -12,17 +25,23 @@ const Navbar = () => {
           <p>ÖkoHelden</p>
         </div>
         <ul className="navbar-links">
+        {
+          !isLoggedIn &&
           <li>
             <a href="/">Startseite</a>
           </li>
+        }
+        {
+          isLoggedIn &&
           <li>
-            <a href="/Dashboard">Fächer</a>
+            <a href="/Dashboard">Home</a>
           </li>
+        }
         </ul>
         {isLoggedIn && 
           <div className="navbar-user">
-            <span>Welcome, User</span>
-          <Buttonout as={Link} to="/Logout">
+            <span>Welcome, {session.firstName}</span>
+          <Buttonout onClick={() => handleLogout()}>
             Logout
           </Buttonout>
           </div>

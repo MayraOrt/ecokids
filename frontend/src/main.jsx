@@ -21,6 +21,7 @@ import Deutschvierte from './pages/Deutschvierte.jsx';
 
 import Mathe from './pages/Mathe.jsx';
 import MatheErste from './pages/MatheErste.jsx';
+import Mathezweite from './pages/Mathezweite.jsx';
 import Mathedritte from './pages/Mathedritte.jsx';
 import Mathevierte from './pages/Mathevierte.jsx';
 
@@ -183,11 +184,21 @@ const router = createBrowserRouter([
       </MainLayout>      
     )
   },
+  
   {
     path: "/matheErste",
     element: (
       <MainLayout>
         <MatheErste/>
+      </MainLayout>      
+    )
+  },
+
+  {
+    path: "/mathezweite",
+    element: (
+      <MainLayout>
+        <Mathezweite/>
       </MainLayout>      
     )
   },

@@ -15,11 +15,7 @@ const RegisterPage = () => {
     e.preventDefault();
 
     try {
-<<<<<<< HEAD:src/pages/Register.page.jsx
-      const response = await axios.post('http://localhost:3307/register', {
-=======
       const response = await axios.post('http://localhost:8080/register', {
->>>>>>> master:frontend/src/pages/Register.page.jsx
         first_name,
         last_name,
         email,

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -74,8 +75,6 @@ const LoginPage = () => {
   );
 };
 
-<<<<<<< HEAD:src/pages/Login.page.jsx
-=======
 // Styled Components
 const Container = styled.div`
   display: flex;
@@ -139,5 +138,4 @@ const ErrorMessage = styled.div`
   text-align: center;
 `;
 
->>>>>>> master:frontend/src/pages/Login.page.jsx
 export default LoginPage;

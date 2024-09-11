@@ -1,19 +1,17 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
-
-const port=  3307;
-
-const cors = require('cors');
-const express = require('express');
 const app = express();
+const port=  8080;
 
+app.use(express.json());
 app.use(cors({
   origin: '*',
   allowedHeaders: ['*'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
+
 
 
 const connection = mysql.createConnection({
@@ -31,9 +29,8 @@ connection.connect((err) => {
   }
   console.log('Mit der MySQL-Datenbank verbunden.');
 });
-// Login Route
 
-app.post('/register', async (req, res) => {
+app.post('/register', (req, res) => {
   const { first_name, last_name, email, password, class_level } = req.body;
 
   const query = 'INSERT INTO users (first_name, last_name, email, password, class_level) VALUES (?, ?, ?, ?, ?)';
@@ -56,5 +53,3 @@ app.post('/Login', (req, res) =>{
 app.listen(port, () => {
   console.log(`Server läuft auf http://localhost:${port}`);
 });
-
-

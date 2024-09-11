@@ -8,18 +8,12 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom';
-<<<<<<< HEAD:src/main.jsx
 
-import globalStyles from './globalStyles.jsx'; // Stelle sicher, dass der Importpfad korrekt ist
-=======
 import './index.css';
->>>>>>> master:frontend/src/main.jsx
 
-// Importiere die Seiten und Komponenten
 import LoginPage from './pages/Login.page.jsx';
 import Deutsch from './pages/Deutsch.jsx';
 import RegisterPage from './pages/Register.page.jsx';
-<<<<<<< HEAD:src/main.jsx
 
 import Deutscherste from './pages/Deutscherste.jsx';
 import Deutschzweite from './pages/Deutschzweite.jsx';
@@ -33,23 +27,12 @@ import WoerterMatching from './pages/WoerterMatching.jsx';
 import Leseecke from './pages/Leseecke.jsx';
 import Arbeitsmaterialien from './pages/Arbeitsmaterialien.jsx';
 
-
-
-import Navbar from './components/Navbar.jsx';
 import About from './components/About';
-=======
-import About from './components/About.jsx';
 import SpielPage from './pages/Spiel.page.jsx';
 import MainLayout from './Layouts/MainLayout.jsx';
 import DashboardPage from './pages/Dashboard.page.jsx';
 import NachhaltigkeitPage from './pages/Nachhaltigkeit.page.jsx';
 
->>>>>>> master:frontend/src/main.jsx
-
-
-
-
-// Router-Konfiguration
 const router = createBrowserRouter([
   {
     path: "/",
@@ -111,33 +94,27 @@ const router = createBrowserRouter([
   {
     path: "/deutsch",
     element: (
-      <>
-        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
-        <Navbar />
+      <MainLayout>
         <Deutsch/>
-      </>
+      </MainLayout>
     )
   },
 
   {
     path: "/deutscherste",
     element: (
-      <>
-        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
-        <Navbar />
+      <MainLayout>
         <Deutscherste/>
-      </>
+      </MainLayout>
     )
   },
 
   {
     path: "/buchstabenspiel",
     element: (
-      <>
-        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
-        <Navbar />
+      <MainLayout>
         <BuchstabenSpiel/>
-      </>
+      </MainLayout>
     )
   },
 
@@ -145,32 +122,26 @@ const router = createBrowserRouter([
   {
     path: "/woertermatching",
     element: (
-      <>
-        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
-        <Navbar />
+      <MainLayout>
         <WoerterMatching/>
-      </>
+      </MainLayout>
     )
   },
 
   {
     path: "/leseecke",
     element: (
-      <>
-        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
-        <Navbar />
+      <MainLayout>
         <Leseecke/>
-      </>
+      </MainLayout>
     )
   },
   {
     path: "/arbeitsmaterialien",
     element: (
-      <>
-        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
-        <Navbar />
+      <MainLayout>
         <Arbeitsmaterialien/>
-      </>
+      </MainLayout>
     )
   },
 
@@ -178,44 +149,36 @@ const router = createBrowserRouter([
   {
     path: "/deutschzweite",
     element: (
-      <>
-        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
-        <Navbar />
+      <MainLayout>
         <Deutschzweite/>
-      </>
+      </MainLayout>
     )
   },
 
   {
     path: "/deutschdritte",
     element: (
-      <>
-        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
-        <Navbar />
+      <MainLayout>
         <Deutschdritte/>
-      </>
+      </MainLayout>
     )
   },
 
   {
     path: "/deutschvierte",
     element: (
-      <>
-        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
-        <Navbar />
+      <MainLayout>
         <Deutschvierte/>
-      </>
+      </MainLayout>
     )
   },
 
   {
     path: "/mathe",
     element: (
-      <>
-        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
-        <Navbar />
+      <MainLayout>
         <Mathe/>
-      </>
+      </MainLayout>      
     )
   },
 

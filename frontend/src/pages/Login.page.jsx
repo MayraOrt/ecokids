@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -10,6 +11,23 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log (email, password);
+
+    try {
+      const response = await axios.post('http://localhost:8080/Login', {
+        email,
+        password,       
+      });
+
+      if (response.status === 201) {
+        // navigate('/login');
+      } else {
+        setError('Es gab ein Problem bei der Login.');
+      }
+    } catch (err) {
+      console.error('Loginfehler:', err.response ? err.response.data : err.message);
+      setError('Es gab ein Problem bei der Login. Bitte versuche es erneut.');
+    }
     
   };
 

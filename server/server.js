@@ -6,7 +6,8 @@ const port=  8080;
 
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: '*',
+  allowedHeaders: ['*'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
@@ -43,6 +44,14 @@ app.post('/register', (req, res) => {
   });
 });
 
+app.post('/Login', (req, res) =>{
+  const { email, password } = req.body;
+  return res.status(201).json({ tu_usuario: email, tu_contrasenia: password});
+
+});
+
 app.listen(port, () => {
   console.log(`Server läuft auf http://localhost:${port}`);
 });
+
+

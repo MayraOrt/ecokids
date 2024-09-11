@@ -9,15 +9,18 @@ const express = require('express');
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:5173', // Zulassen von Anfragen von diesem Origin
+  origin: '*',
+  allowedHeaders: ['*'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
 }));
 
 
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
-  database: 'ökohelden',
+  password: 'toor',
+  database: 'oekohelden',
   port: '3307',
 });
 
@@ -44,6 +47,14 @@ app.post('/register', async (req, res) => {
   });
 });
 
+app.post('/Login', (req, res) =>{
+  const { email, password } = req.body;
+  return res.status(201).json({ tu_usuario: email, tu_contrasenia: password});
+
+});
+
 app.listen(port, () => {
   console.log(`Server läuft auf http://localhost:${port}`);
 });
+
+

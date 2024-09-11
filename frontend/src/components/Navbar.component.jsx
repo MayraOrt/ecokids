@@ -16,13 +16,7 @@ const Navbar = () => {
             <a href="/">Startseite</a>
           </li>
           <li>
-            <a href="/Spiel">Spiel</a>
-          </li>
-          <li>
-            <a href="#services">Services</a>
-          </li>
-          <li>
-            <a href="/Dashboard">Dashboard</a>
+            <a href="/Dashboard">Fächer</a>
           </li>
         </ul>
         {isLoggedIn && 

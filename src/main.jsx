@@ -23,6 +23,7 @@ import Deutschvierte from './pages/Deutschvierte.jsx';
 
 import Mathe from './pages/Mathe.jsx';
 import Mathedritte from './pages/Mathedritte.jsx';
+import Mathevierte from './pages/Mathevierte.jsx';
 
 import BuchstabenSpiel from './pages/BuchstabenSpiel.jsx';
 import WoerterMatching from './pages/WoerterMatching.jsx';
@@ -198,6 +199,18 @@ const router = createBrowserRouter([
         <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
         <Navbar />
         <Mathedritte/>
+      </>
+    )
+  },
+
+
+  {
+    path: "/mathevierte",
+    element: (
+      <>
+        <globalStyles /> {/* Füge GlobalStyle hier hinzu */}
+        <Navbar />
+        <Mathevierte/>
       </>
     )
   },

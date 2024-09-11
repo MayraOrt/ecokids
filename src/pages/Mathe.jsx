@@ -69,7 +69,7 @@ Zeit und Geld, Daten und Diagramme
           </div>
         </Link>
         
-        <Link to="/Mathematikerste" className="border-2 border-yellow-400 shadow-md rounded-xl p-4 flex flex-col items-center text-stone-800">
+        <Link to="/mathevierte" className="border-2 border-yellow-400 shadow-md rounded-xl p-4 flex flex-col items-center text-stone-800">
           <div className="flex gap-5 justify-between w-full font-bold text-2xl text-center">
             <div className="my-auto">
               Mathematik <br />

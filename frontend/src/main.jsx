@@ -1,5 +1,4 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './index.css';
 
 import { StrictMode } from 'react';
@@ -21,6 +20,8 @@ import Deutschdritte from './pages/Deutschdritte.jsx';
 import Deutschvierte from './pages/Deutschvierte.jsx';
 
 import Mathe from './pages/Mathe.jsx';
+import Mathedritte from './pages/Mathedritte.jsx';
+import Mathevierte from './pages/Mathevierte.jsx';
 
 import BuchstabenSpiel from './pages/BuchstabenSpiel.jsx';
 import WoerterMatching from './pages/WoerterMatching.jsx';
@@ -181,6 +182,26 @@ const router = createBrowserRouter([
       </MainLayout>      
     )
   },
+
+  {
+    path: "/mathedritte",
+    element: (
+      <MainLayout>
+        <Mathedritte/>
+      </MainLayout>      
+    )
+  },
+
+
+  {
+    path: "/mathevierte",
+    element: (
+      <MainLayout>
+        <Mathevierte/>
+      </MainLayout>      
+    )
+  },
+
 
 ]);
 

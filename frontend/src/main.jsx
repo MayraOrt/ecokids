@@ -34,6 +34,11 @@ import MainLayout from './Layouts/MainLayout.jsx';
 import DashboardPage from './pages/Dashboard.page.jsx';
 import NachhaltigkeitPage from './pages/Nachhaltigkeit.page.jsx';
 
+import Profil from './pages/Profil.jsx';
+import MeinProfil from './pages/MeinProfil.jsx';
+import Schülerverwaltung from './pages/Schülerverwaltung.jsx';
+import Help from './pages/Help.jsx';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -198,6 +203,41 @@ const router = createBrowserRouter([
     element: (
       <MainLayout>
         <Mathevierte/>
+      </MainLayout>      
+    )
+  },
+
+  {
+    path: "/profil",
+    element: (
+      <MainLayout>
+        <Profil/>
+      </MainLayout>      
+    )
+  },
+  {
+    path: "/meinprofil",
+    element: (
+      <MainLayout>
+        <MeinProfil/>
+      </MainLayout>      
+    )
+  },
+
+  {
+    path: "/schülerverwaltung",
+    element: (
+      <MainLayout>
+        <Schülerverwaltung/>
+      </MainLayout>      
+    )
+  },
+
+  {
+    path: "/help",
+    element: (
+      <MainLayout>
+        <Help/>
       </MainLayout>      
     )
   },

@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import './index.css';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  createBrowserRouter,
-  RouterProvider,
+  BrowserRouter,
+  Navigate,
+  useRoutes,
 } from 'react-router-dom';
 
 import './index.css';
@@ -20,6 +21,8 @@ import Deutschdritte from './pages/Deutschdritte.jsx';
 import Deutschvierte from './pages/Deutschvierte.jsx';
 
 import Mathe from './pages/Mathe.jsx';
+import MatheErste from './pages/MatheErste.jsx';
+import Mathezweite from './pages/Mathezweite.jsx';
 import Mathedritte from './pages/Mathedritte.jsx';
 import Mathevierte from './pages/Mathevierte.jsx';
 
@@ -28,7 +31,7 @@ import WoerterMatching from './pages/WoerterMatching.jsx';
 import Leseecke from './pages/Leseecke.jsx';
 import Arbeitsmaterialien from './pages/Arbeitsmaterialien.jsx';
 
-import About from './components/About';
+import About from './pages/About';
 import SpielPage from './pages/Spiel.page.jsx';
 import MainLayout from './Layouts/MainLayout.jsx';
 import DashboardPage from './pages/Dashboard.page.jsx';
@@ -39,215 +42,59 @@ import MeinProfil from './pages/MeinProfil.jsx';
 import Schülerverwaltung from './pages/Schülerverwaltung.jsx';
 import Help from './pages/Help.jsx';
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <MainLayout>
-        <About />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/login",
-    element: (
-      <MainLayout>
-        <LoginPage />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/register",
-    element: (
-      <MainLayout>
-        <RegisterPage />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/about",
-    element: (
-      <MainLayout>
-        <About />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/Spiel",
-    element: (
-      <MainLayout>
-        <SpielPage />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/Dashboard",
-    element: (
-      <MainLayout>
-        <DashboardPage />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/Nachhaltigkeit",
-    element: (
-      <MainLayout>
-        <NachhaltigkeitPage />
-      </MainLayout>
-    ),
-  },
+import { SessionContext, SessionProvider } from './contexts/SessionContext.jsx';
 
-  {
-    path: "/deutsch",
-    element: (
-      <MainLayout>
-        <Deutsch/>
-      </MainLayout>
-    )
-  },
+const Routes = () => {
+  const {isLoggedIn, checkSession, isLoading} = useContext(SessionContext);
 
-  {
-    path: "/deutscherste",
-    element: (
-      <MainLayout>
-        <Deutscherste/>
-      </MainLayout>
-    )
-  },
+  useEffect(() => {
+    checkSession()
+  }, [checkSession])
 
-  {
-    path: "/buchstabenspiel",
-    element: (
-      <MainLayout>
-        <BuchstabenSpiel/>
-      </MainLayout>
-    )
-  },
+  if(isLoading) {
+    return useRoutes([]);
+  }
 
+  return useRoutes([
+    { path: "/", element: <MainLayout> <About /> </MainLayout> },
+    { path: "/login", element: !isLoggedIn ? <MainLayout> <LoginPage /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/register", element: !isLoggedIn ? <MainLayout> <RegisterPage /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/Spiel", element: isLoggedIn ? <MainLayout> <SpielPage /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/Dashboard", element: isLoggedIn ? <MainLayout> <DashboardPage /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/Nachhaltigkeit", element: isLoggedIn ? <MainLayout> <NachhaltigkeitPage /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/deutsch", element: isLoggedIn ? <MainLayout> <Deutsch /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/deutscherste", element: isLoggedIn ? <MainLayout> <Deutscherste /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/buchstabenspiel", element: isLoggedIn ? <MainLayout> <BuchstabenSpiel /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/woertermatching", element: isLoggedIn ? <MainLayout> <WoerterMatching /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/leseecke", element: isLoggedIn ? <MainLayout> <Leseecke /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/arbeitsmaterialien", element: isLoggedIn ? <MainLayout> <Arbeitsmaterialien /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/deutschzweite", element: isLoggedIn ? <MainLayout> <Deutschzweite /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/deutschdritte", element: isLoggedIn ? <MainLayout> <Deutschdritte /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/deutschvierte", element: isLoggedIn ? <MainLayout> <Deutschvierte /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/mathe", element: isLoggedIn ? <MainLayout> <Mathe /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/matheErste", element: isLoggedIn ? <MainLayout> <MatheErste /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/mathezweite", element: isLoggedIn ? <MainLayout> <Mathezweite /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/mathedritte", element: isLoggedIn ? <MainLayout> <Mathedritte /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/mathevierte", element: isLoggedIn ? <MainLayout> <Mathevierte /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/profil", element: isLoggedIn ? <MainLayout> <Profil/> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/meinprofil", element: isLoggedIn ? <MainLayout> <MeinProfil/> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/schülerverwaltung", element: isLoggedIn ? <MainLayout> <Schülerverwaltung/> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/help", element: isLoggedIn ? <MainLayout> <Help/> </MainLayout> : <Navigate replace to="/" /> },
+  ]);
+}
 
-  {
-    path: "/woertermatching",
-    element: (
-      <MainLayout>
-        <WoerterMatching/>
-      </MainLayout>
-    )
-  },
+const App = () => {
+  return (
+    <SessionProvider>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
+    </SessionProvider>
+  );
+}
 
-  {
-    path: "/leseecke",
-    element: (
-      <MainLayout>
-        <Leseecke/>
-      </MainLayout>
-    )
-  },
-  {
-    path: "/arbeitsmaterialien",
-    element: (
-      <MainLayout>
-        <Arbeitsmaterialien/>
-      </MainLayout>
-    )
-  },
-
-
-  {
-    path: "/deutschzweite",
-    element: (
-      <MainLayout>
-        <Deutschzweite/>
-      </MainLayout>
-    )
-  },
-
-  {
-    path: "/deutschdritte",
-    element: (
-      <MainLayout>
-        <Deutschdritte/>
-      </MainLayout>
-    )
-  },
-
-  {
-    path: "/deutschvierte",
-    element: (
-      <MainLayout>
-        <Deutschvierte/>
-      </MainLayout>
-    )
-  },
-
-  {
-    path: "/mathe",
-    element: (
-      <MainLayout>
-        <Mathe/>
-      </MainLayout>      
-    )
-  },
-
-  {
-    path: "/mathedritte",
-    element: (
-      <MainLayout>
-        <Mathedritte/>
-      </MainLayout>      
-    )
-  },
-
-
-  {
-    path: "/mathevierte",
-    element: (
-      <MainLayout>
-        <Mathevierte/>
-      </MainLayout>      
-    )
-  },
-
-  {
-    path: "/profil",
-    element: (
-      <MainLayout>
-        <Profil/>
-      </MainLayout>      
-    )
-  },
-  {
-    path: "/meinprofil",
-    element: (
-      <MainLayout>
-        <MeinProfil/>
-      </MainLayout>      
-    )
-  },
-
-  {
-    path: "/schülerverwaltung",
-    element: (
-      <MainLayout>
-        <Schülerverwaltung/>
-      </MainLayout>      
-    )
-  },
-
-  {
-    path: "/help",
-    element: (
-      <MainLayout>
-        <Help/>
-      </MainLayout>      
-    )
-  },
-
-
-]);
-
-// React-Rendering
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <App />
   </StrictMode>
 );

@@ -36,6 +36,12 @@ import SpielPage from './pages/Spiel.page.jsx';
 import MainLayout from './Layouts/MainLayout.jsx';
 import DashboardPage from './pages/Dashboard.page.jsx';
 import NachhaltigkeitPage from './pages/Nachhaltigkeit.page.jsx';
+
+import Profil from './pages/Profil.jsx';
+import MeinProfil from './pages/MeinProfil.jsx';
+import Schülerverwaltung from './pages/Schülerverwaltung.jsx';
+import Help from './pages/Help.jsx';
+
 import { SessionContext, SessionProvider } from './contexts/SessionContext.jsx';
 
 const Routes = () => {
@@ -70,6 +76,10 @@ const Routes = () => {
     { path: "/mathezweite", element: isLoggedIn ? <MainLayout> <Mathezweite /> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/mathedritte", element: isLoggedIn ? <MainLayout> <Mathedritte /> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/mathevierte", element: isLoggedIn ? <MainLayout> <Mathevierte /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/profil", element: isLoggedIn ? <MainLayout> <Profil/> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/meinprofil", element: isLoggedIn ? <MainLayout> <MeinProfil/> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/schülerverwaltung", element: isLoggedIn ? <MainLayout> <Schülerverwaltung/> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/help", element: isLoggedIn ? <MainLayout> <Help/> </MainLayout> : <Navigate replace to="/" /> },
   ]);
 }
 
@@ -82,7 +92,7 @@ const App = () => {
     </SessionProvider>
   );
 }
-// React-Rendering
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <App />

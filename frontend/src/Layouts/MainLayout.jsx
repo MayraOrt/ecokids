@@ -4,7 +4,7 @@ import GlobalStyle from "../GlobalStyle"
 const MainLayout = ({children}) => {
     return(
         <>
-            <GlobalStyle /> {/* Füge GlobalStyle hier hinzu */}
+            <GlobalStyle /> 
             <Navbar />
             {children}
         </>

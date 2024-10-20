@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { SessionContext } from '../contexts/SessionContext';
 
 const LoginPage = () => {
+  const { checkSession } = useContext(SessionContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -11,24 +13,37 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log (email, password);
+    console.log(email, password);
+
+    //Verbindung mit Backend - axios: HTTP anfrage 
 
     try {
-      const response = await axios.post('http://localhost:8080/Login', {
+      const response = await axios.post('http://localhost:8080/login', {
         email,
         password,       
       });
 
-      if (response.status === 201) {
-        // navigate('/login');
+      if (response.status === 200 && response.data.token) {
+        localStorage.setItem('ecotoken', response.data.token);
+        checkSession();
+        navigate('/dashboard');
       } else {
-        setError('Es gab ein Problem bei der Login.');
+        setError('Unerwartete Serverantwort. Bitte versuchen Sie es erneut.');
       }
     } catch (err) {
-      console.error('Loginfehler:', err.response ? err.response.data : err.message);
-      setError('Es gab ein Problem bei der Login. Bitte versuche es erneut.');
+      if (err.response) {
+        if (err.response.status === 401) {
+          setError('Ungültige E-Mail oder Passwort. Bitte überprüfen Sie Ihre Eingaben.');
+        } else {
+          setError('Serverfehler. Bitte versuchen Sie es später erneut.');
+        }
+      } else if (err.request) {
+        setError('Keine Antwort vom Server. Bitte überprüfen Sie Ihre Internetverbindung.');
+      } else {
+        setError('Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.');
+      }
+      console.error('Loginfehler:', err);
     }
-    
   };
 
   return (

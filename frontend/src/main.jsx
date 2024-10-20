@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import './index.css';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  createBrowserRouter,
-  RouterProvider,
+  BrowserRouter,
+  Navigate,
+  useRoutes,
 } from 'react-router-dom';
 
 import './index.css';
@@ -30,204 +31,60 @@ import WoerterMatching from './pages/WoerterMatching.jsx';
 import Leseecke from './pages/Leseecke.jsx';
 import Arbeitsmaterialien from './pages/Arbeitsmaterialien.jsx';
 
-import About from './components/About';
+import About from './pages/About';
 import SpielPage from './pages/Spiel.page.jsx';
 import MainLayout from './Layouts/MainLayout.jsx';
 import DashboardPage from './pages/Dashboard.page.jsx';
 import NachhaltigkeitPage from './pages/Nachhaltigkeit.page.jsx';
+import { SessionContext, SessionProvider } from './contexts/SessionContext.jsx';
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <MainLayout>
-        <About />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/login",
-    element: (
-      <MainLayout>
-        <LoginPage />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/register",
-    element: (
-      <MainLayout>
-        <RegisterPage />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/about",
-    element: (
-      <MainLayout>
-        <About />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/Spiel",
-    element: (
-      <MainLayout>
-        <SpielPage />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/Dashboard",
-    element: (
-      <MainLayout>
-        <DashboardPage />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/Nachhaltigkeit",
-    element: (
-      <MainLayout>
-        <NachhaltigkeitPage />
-      </MainLayout>
-    ),
-  },
+const Routes = () => {
+  const {isLoggedIn, checkSession, isLoading} = useContext(SessionContext);
 
-  {
-    path: "/deutsch",
-    element: (
-      <MainLayout>
-        <Deutsch/>
-      </MainLayout>
-    )
-  },
+  useEffect(() => {
+    checkSession()
+  }, [checkSession])
 
-  {
-    path: "/deutscherste",
-    element: (
-      <MainLayout>
-        <Deutscherste/>
-      </MainLayout>
-    )
-  },
+  if(isLoading) {
+    return useRoutes([]);
+  }
 
-  {
-    path: "/buchstabenspiel",
-    element: (
-      <MainLayout>
-        <BuchstabenSpiel/>
-      </MainLayout>
-    )
-  },
+  return useRoutes([
+    { path: "/", element: <MainLayout> <About /> </MainLayout> },
+    { path: "/login", element: !isLoggedIn ? <MainLayout> <LoginPage /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/register", element: !isLoggedIn ? <MainLayout> <RegisterPage /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/Spiel", element: isLoggedIn ? <MainLayout> <SpielPage /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/Dashboard", element: isLoggedIn ? <MainLayout> <DashboardPage /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/Nachhaltigkeit", element: isLoggedIn ? <MainLayout> <NachhaltigkeitPage /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/deutsch", element: isLoggedIn ? <MainLayout> <Deutsch /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/deutscherste", element: isLoggedIn ? <MainLayout> <Deutscherste /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/buchstabenspiel", element: isLoggedIn ? <MainLayout> <BuchstabenSpiel /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/woertermatching", element: isLoggedIn ? <MainLayout> <WoerterMatching /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/leseecke", element: isLoggedIn ? <MainLayout> <Leseecke /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/arbeitsmaterialien", element: isLoggedIn ? <MainLayout> <Arbeitsmaterialien /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/deutschzweite", element: isLoggedIn ? <MainLayout> <Deutschzweite /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/deutschdritte", element: isLoggedIn ? <MainLayout> <Deutschdritte /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/deutschvierte", element: isLoggedIn ? <MainLayout> <Deutschvierte /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/mathe", element: isLoggedIn ? <MainLayout> <Mathe /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/matheErste", element: isLoggedIn ? <MainLayout> <MatheErste /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/mathezweite", element: isLoggedIn ? <MainLayout> <Mathezweite /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/mathedritte", element: isLoggedIn ? <MainLayout> <Mathedritte /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/mathevierte", element: isLoggedIn ? <MainLayout> <Mathevierte /> </MainLayout> : <Navigate replace to="/" /> },
+  ]);
+}
 
-
-  {
-    path: "/woertermatching",
-    element: (
-      <MainLayout>
-        <WoerterMatching/>
-      </MainLayout>
-    )
-  },
-
-  {
-    path: "/leseecke",
-    element: (
-      <MainLayout>
-        <Leseecke/>
-      </MainLayout>
-    )
-  },
-  {
-    path: "/arbeitsmaterialien",
-    element: (
-      <MainLayout>
-        <Arbeitsmaterialien/>
-      </MainLayout>
-    )
-  },
-
-
-  {
-    path: "/deutschzweite",
-    element: (
-      <MainLayout>
-        <Deutschzweite/>
-      </MainLayout>
-    )
-  },
-
-  {
-    path: "/deutschdritte",
-    element: (
-      <MainLayout>
-        <Deutschdritte/>
-      </MainLayout>
-    )
-  },
-
-  {
-    path: "/deutschvierte",
-    element: (
-      <MainLayout>
-        <Deutschvierte/>
-      </MainLayout>
-    )
-  },
-
-  {
-    path: "/mathe",
-    element: (
-      <MainLayout>
-        <Mathe/>
-      </MainLayout>      
-    )
-  },
-  
-  {
-    path: "/matheErste",
-    element: (
-      <MainLayout>
-        <MatheErste/>
-      </MainLayout>      
-    )
-  },
-
-  {
-    path: "/mathezweite",
-    element: (
-      <MainLayout>
-        <Mathezweite/>
-      </MainLayout>      
-    )
-  },
-
-  {
-    path: "/mathedritte",
-    element: (
-      <MainLayout>
-        <Mathedritte/>
-      </MainLayout>      
-    )
-  },
-
-
-  {
-    path: "/mathevierte",
-    element: (
-      <MainLayout>
-        <Mathevierte/>
-      </MainLayout>      
-    )
-  },
-
-
-]);
-
+const App = () => {
+  return (
+    <SessionProvider>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
+    </SessionProvider>
+  );
+}
 // React-Rendering
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <App />
   </StrictMode>
 );

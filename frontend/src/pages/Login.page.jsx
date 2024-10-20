@@ -15,6 +15,8 @@ const LoginPage = () => {
     e.preventDefault();
     console.log(email, password);
 
+    //Verbindung mit Backend - axios: HTTP anfrage 
+
     try {
       const response = await axios.post('http://localhost:8080/login', {
         email,

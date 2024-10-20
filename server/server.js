@@ -1,8 +1,8 @@
-const express = require('express');
-const cors = require('cors');
+const express = require('express'); //HTTP anfrage und antowrten zu verarbeiten
+const cors = require('cors'); // von unbefugtem zugriff zu schützen
 const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken'); // Authentifisierung und authorisierung
 const app = express();
 const port = 8080;
 
@@ -39,6 +39,7 @@ app.post('/register', async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // INSERT EIN USER:
     const query = 'INSERT INTO users (first_name, last_name, email, password, class_level) VALUES (?, ?, ?, ?, ?)';
 
     connection.query(query, [first_name, last_name, email, hashedPassword, class_level], (err, results) => {

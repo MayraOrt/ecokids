@@ -33,16 +33,16 @@ connection.connect((err) => {
 const JWT_SECRET = 'oekohelden';
 
 app.post('/register', async (req, res) => {
-  const { first_name, last_name, email, password, class_level } = req.body;
+  const { first_name, last_name, email, password, class_level, is_teacher } = req.body;
 
   try {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // INSERT EIN USER:
-    const query = 'INSERT INTO users (first_name, last_name, email, password, class_level) VALUES (?, ?, ?, ?, ?)';
+    const query = 'INSERT INTO users (first_name, last_name, email, password, class_level, is_teacher) VALUES (?, ?, ?, ?, ?, ?)';
 
-    connection.query(query, [first_name, last_name, email, hashedPassword, class_level], (err, results) => {
+    connection.query(query, [first_name, last_name, email, hashedPassword, class_level, is_teacher], (err, _) => {
       if (err) {
         console.error('Fehler beim Erstellen des Benutzers:', err);
         return res.status(500).json({ error: 'Datenbankfehler' });
@@ -76,9 +76,15 @@ app.post('/login', (req, res) => {
       if (await bcrypt.compare(password, user.password)) {
         // Create JWT token
         const token = jwt.sign(
-          { userId: user.id, email: user.email, firstName: user.first_name, lastName: user.last_name},
+          { 
+            userId: user.id, 
+            email: user.email, 
+            firstName: user.first_name, 
+            lastName: user.last_name,
+            isTeacher: user.is_teacher || false
+          },
           JWT_SECRET,
-          { expiresIn: '1h' }
+          { expiresIn: '12h' }
         );
 
         res.status(200).json({ message: 'Erfolgreich eingeloggt', token });

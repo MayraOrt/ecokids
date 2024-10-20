@@ -14,6 +14,7 @@ export const SessionProvider = ({children}) => {
         active: false,
         firstName: null,
         lastName: null,
+        isTeacher: false,
     })
 
     const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +34,8 @@ export const SessionProvider = ({children}) => {
           setSession({
             active: true,
             firstName: decoded.firstName || 'user',
-            lastName: decoded.lastName || ''
+            lastName: decoded.lastName || '',
+            isTeacher: decoded.isTeacher || false, 
           });
 
         } else {
@@ -41,6 +43,7 @@ export const SessionProvider = ({children}) => {
             active: false,
             firstName: null,
             lastName: null,
+            isTeacher: false
           });
         }
         setIsLoading(false);

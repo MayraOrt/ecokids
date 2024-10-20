@@ -1,15 +1,39 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useEffect } from 'react';
+
+const TEACHER_DOMAINS = [
+  'schule.de',
+  'teacher.de',
+  'admin.de'
+]
+
+function validateEmailDomain(email, allowedDomains) {
+    const escapedDomains = allowedDomains.map(domain => 
+        domain.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    );
+    
+    const pattern = new RegExp(
+        `^[a-zA-Z0-9._%+-]+@(${escapedDomains.join('|')})$`,
+        'i'
+    );
+    
+    return pattern.test(email);
+}
 
 const RegisterPage = () => {
   const navigate = useNavigate();
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [is_teacher, setIsTeacher] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [class_level, setClassLevel] = useState('');
+
+  useEffect(() => {
+    setIsTeacher(validateEmailDomain(email, TEACHER_DOMAINS))
+  }, [email])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +44,7 @@ const RegisterPage = () => {
         last_name,
         email,
         password,
-       
+        is_teacher
       });
 
       if (response.status === 201) {
@@ -79,7 +103,9 @@ const RegisterPage = () => {
               required
               className="w-full px-3 py-2 border border-gray-300 rounded-lg"
             />
+            { is_teacher && <div className="w-full text-center text-emerald-600"> Ich bin ein Lehrer </div> }
           </div>
+
           <div className="mb-6">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">Passwort</label>
             <input

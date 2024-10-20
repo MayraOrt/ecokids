@@ -13,7 +13,8 @@ const Navbar = () => {
     setSession({
       active: false,
       firstName: null,
-      lastName: null
+      lastName: null,
+      isTeacher: false
     })
     navigate('/');
   }

@@ -45,7 +45,7 @@ import Help from './pages/Help.jsx';
 import { SessionContext, SessionProvider } from './contexts/SessionContext.jsx';
 
 const Routes = () => {
-  const {isLoggedIn, checkSession, isLoading} = useContext(SessionContext);
+  const {isLoggedIn, checkSession, isLoading, session} = useContext(SessionContext);
 
   useEffect(() => {
     checkSession()
@@ -78,7 +78,7 @@ const Routes = () => {
     { path: "/mathevierte", element: isLoggedIn ? <MainLayout> <Mathevierte /> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/profil", element: isLoggedIn ? <MainLayout> <Profil/> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/meinprofil", element: isLoggedIn ? <MainLayout> <MeinProfil/> </MainLayout> : <Navigate replace to="/" /> },
-    { path: "/schülerverwaltung", element: isLoggedIn ? <MainLayout> <Schülerverwaltung/> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/schülerverwaltung", element: isLoggedIn && session.isTeacher ? <MainLayout> <Schülerverwaltung/> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/help", element: isLoggedIn ? <MainLayout> <Help/> </MainLayout> : <Navigate replace to="/" /> },
   ]);
 }

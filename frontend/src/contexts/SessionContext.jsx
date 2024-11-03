@@ -30,23 +30,27 @@ export const SessionProvider = ({children}) => {
             console.log('no valid token found');
         }
 
+        let session;
+
         if (decoded) {
-          setSession({
+          session = {
             active: true,
             firstName: decoded.firstName || 'user',
             lastName: decoded.lastName || '',
-            isTeacher: decoded.isTeacher || false, 
-          });
-
+            isTeacher: decoded.isTeacher ? true : false, 
+          };
         } else {
-          setSession({
+          session = {
             active: false,
             firstName: null,
             lastName: null,
             isTeacher: false
-          });
+          };
         }
+
+        setSession(session)
         setIsLoading(false);
+        return session;
       }, []);
 
     useEffect(() => {

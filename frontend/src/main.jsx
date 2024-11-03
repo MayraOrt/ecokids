@@ -35,6 +35,7 @@ import About from './pages/About';
 import SpielPage from './pages/Spiel.page.jsx';
 import MainLayout from './Layouts/MainLayout.jsx';
 import DashboardPage from './pages/Dashboard.page.jsx';
+import LehrerDashPage from './pages/LehrerDash.page.jsx';
 import NachhaltigkeitPage from './pages/Nachhaltigkeit.page.jsx';
 
 import Profil from './pages/Profil.jsx';
@@ -59,9 +60,14 @@ const Routes = () => {
     { path: "/", element: <MainLayout> <About /> </MainLayout> },
     { path: "/login", element: !isLoggedIn ? <MainLayout> <LoginPage /> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/register", element: !isLoggedIn ? <MainLayout> <RegisterPage /> </MainLayout> : <Navigate replace to="/" /> },
-    { path: "/Spiel", element: isLoggedIn ? <MainLayout> <SpielPage /> </MainLayout> : <Navigate replace to="/" /> },
-    { path: "/Dashboard", element: isLoggedIn ? <MainLayout> <DashboardPage /> </MainLayout> : <Navigate replace to="/" /> },
-    { path: "/Nachhaltigkeit", element: isLoggedIn ? <MainLayout> <NachhaltigkeitPage /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/dashboard", element: isLoggedIn ? <MainLayout> <DashboardPage /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/profil", element: isLoggedIn ? <MainLayout> <Profil/> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/meinprofil", element: isLoggedIn ? <MainLayout> <MeinProfil/> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/schülerverwaltung", element: isLoggedIn && session.isTeacher ? <MainLayout> <Schülerverwaltung/> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/help", element: isLoggedIn ? <MainLayout> <Help/> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/dpiel", element: isLoggedIn ? <MainLayout> <SpielPage /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/lehrerdash", element: isLoggedIn && session.isTeacher ? <MainLayout> <LehrerDashPage /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/nachhaltigkeit", element: isLoggedIn ? <MainLayout> <NachhaltigkeitPage /> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/deutsch", element: isLoggedIn ? <MainLayout> <Deutsch /> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/deutscherste", element: isLoggedIn ? <MainLayout> <Deutscherste /> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/buchstabenspiel", element: isLoggedIn ? <MainLayout> <BuchstabenSpiel /> </MainLayout> : <Navigate replace to="/" /> },
@@ -76,10 +82,6 @@ const Routes = () => {
     { path: "/mathezweite", element: isLoggedIn ? <MainLayout> <Mathezweite /> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/mathedritte", element: isLoggedIn ? <MainLayout> <Mathedritte /> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/mathevierte", element: isLoggedIn ? <MainLayout> <Mathevierte /> </MainLayout> : <Navigate replace to="/" /> },
-    { path: "/profil", element: isLoggedIn ? <MainLayout> <Profil/> </MainLayout> : <Navigate replace to="/" /> },
-    { path: "/meinprofil", element: isLoggedIn ? <MainLayout> <MeinProfil/> </MainLayout> : <Navigate replace to="/" /> },
-    { path: "/schülerverwaltung", element: isLoggedIn && session.isTeacher ? <MainLayout> <Schülerverwaltung/> </MainLayout> : <Navigate replace to="/" /> },
-    { path: "/help", element: isLoggedIn ? <MainLayout> <Help/> </MainLayout> : <Navigate replace to="/" /> },
   ]);
 }
 

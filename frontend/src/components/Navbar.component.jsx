@@ -1,12 +1,12 @@
 import './Navbar.component.css';
 import React, { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { SessionContext } from '../contexts/SessionContext';
 
 const Navbar = () => {
   const {isLoggedIn, setSession, session} = useContext(SessionContext); 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     localStorage.removeItem('ecotoken');
@@ -25,7 +25,7 @@ const Navbar = () => {
         <img src="/src/assets/logoimg.png" alt="Logo" />
         <p>ÖkoHelden</p>
       </div>
-      <ul className="navbar-links">
+      <ul className="navbar-links ml-2">
         {
           !isLoggedIn &&
             <li>
@@ -35,24 +35,49 @@ const Navbar = () => {
         {
           isLoggedIn &&
             <li>
-              <a href="/Dashboard">Home</a>
+              <a href={session.isTeacher ? '/lehrerdash':'/dashboard'}>Dashboard</a>
             </li>
         }
       </ul>
-      {isLoggedIn && 
-        <div className="navbar-user">
-          <a href='/profil' className='hover:text-emerald-600'><span>Welcome, {session.firstName}</span></a>
-          <Buttonout onClick={() => handleLogout()}>
-            Logout
-          </Buttonout>
-        </div>
-      }
 
-      {!isLoggedIn && 
-        <Button as={Link} to="/Login">
-          Login
-        </Button>
-      }
+      <div className='ml-auto'>
+        {isLoggedIn && 
+          <div className="flex items-center gap-2">
+            <a href='/profil' className='hover:text-emerald-600'>
+              <div className='flex items-center gap-1'>
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <div>
+                  {session.firstName + ' ' + session.lastName}
+                  <div className='text-xs'>
+                    {session.isTeacher ? 'Lehrer' : 'Schuler'}
+                  </div>
+                  </div>
+              </div>
+            </a>
+            <button onClick={() => handleLogout()} className='btn-secondary'>
+              Logout
+            </button>
+          </div>
+        }
+
+        {!isLoggedIn && location.pathname !== '/login' &&
+          <a href="/login">
+            <button className='btn-primary'>
+              Login
+            </button>
+          </a>
+        }
+
+        {!isLoggedIn && location.pathname === '/login' &&
+          <a href="/register">
+            <button className='btn-secondary'>
+              Register
+            </button>
+          </a>
+        }
+      </div>
 
     </nav>
   );
@@ -60,31 +85,3 @@ const Navbar = () => {
 
 export default Navbar
 
-
-
-const Button = styled(Link)`
-  padding: 0.5rem 1rem;
-  font-size: 15px;
-  font-weight: bold;
-  text-align: center;
-  color: white;
-  background-color: rgba(132, 219, 210, 1);
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-  
- 
-`;
-
-const Buttonout = styled(Link)`
-  padding: 0.5rem 1rem;
-  font-size: 15px;
-  font-weight: bold;
-  text-align: center;
-  color: black;
-  
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-
-  `;

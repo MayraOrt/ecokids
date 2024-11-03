@@ -41,6 +41,7 @@ import NachhaltigkeitPage from './pages/Nachhaltigkeit.page.jsx';
 import Profil from './pages/Profil.jsx';
 import MeinProfil from './pages/MeinProfil.jsx';
 import Schülerverwaltung from './pages/Schülerverwaltung.jsx';
+import KlassenPage from './pages/Klassen.page.jsx';
 import Help from './pages/Help.jsx';
 
 import { SessionContext, SessionProvider } from './contexts/SessionContext.jsx';
@@ -63,10 +64,11 @@ const Routes = () => {
     { path: "/dashboard", element: isLoggedIn ? <MainLayout> <DashboardPage /> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/profil", element: isLoggedIn ? <MainLayout> <Profil/> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/meinprofil", element: isLoggedIn ? <MainLayout> <MeinProfil/> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/lehrerdash", element: isLoggedIn && session.isTeacher ? <MainLayout> <LehrerDashPage /> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/schülerverwaltung", element: isLoggedIn && session.isTeacher ? <MainLayout> <Schülerverwaltung/> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/klassenverwaltung", element: isLoggedIn && session.isTeacher ? <MainLayout> <KlassenPage/> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/help", element: isLoggedIn ? <MainLayout> <Help/> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/dpiel", element: isLoggedIn ? <MainLayout> <SpielPage /> </MainLayout> : <Navigate replace to="/" /> },
-    { path: "/lehrerdash", element: isLoggedIn && session.isTeacher ? <MainLayout> <LehrerDashPage /> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/nachhaltigkeit", element: isLoggedIn ? <MainLayout> <NachhaltigkeitPage /> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/deutsch", element: isLoggedIn ? <MainLayout> <Deutsch /> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/deutscherste", element: isLoggedIn ? <MainLayout> <Deutscherste /> </MainLayout> : <Navigate replace to="/" /> },

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Falls du React Router verwendest
 
-function Mathe(){
+function English(){
     return (
       <div className="main-container bg-red-50 flex flex-col items-center min-h-screen">
         <div className="flex items-center justify-center w-full pt-10">
@@ -106,4 +106,4 @@ function Mathe(){
     );
 }
 
-export default Mathe;
+export default English;

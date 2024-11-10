@@ -50,7 +50,7 @@ function DashboardPage() {
             </div>
           </div>
         </a>
-        <a href="/englsich">
+        <a href="/englisch">
           <div className="min-h-80 border-4 border-yellow-500 bg-[#F3F2F0] shadow-md rounded-xl p-8 w-80 flex justify-between items-center">
             <div className="text-center mb-4 flex flex-col gap-8 justify-between items-center">
               <p className="font-sans text-2xl font-bold">

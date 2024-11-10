@@ -44,6 +44,11 @@ import Schülerverwaltung from './pages/Schülerverwaltung.jsx';
 import Help from './pages/Help.jsx';
 
 import { SessionContext, SessionProvider } from './contexts/SessionContext.jsx';
+import English from './pages/Englisch.jsx';
+import FirstGradeEnglishTopics from './pages/Englischerste.jsx';
+import SecondGradeActivity from './pages/Englischzweite.jsx';
+import ThirdGradeEnglishAdventure from './pages/Englischdritte.jsx';
+import FourthGradeStoryBuilder from './pages/Englischvierte.jsx';
 
 const Routes = () => {
   const {isLoggedIn, checkSession, isLoading, session} = useContext(SessionContext);
@@ -82,6 +87,11 @@ const Routes = () => {
     { path: "/mathezweite", element: isLoggedIn ? <MainLayout> <Mathezweite /> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/mathedritte", element: isLoggedIn ? <MainLayout> <Mathedritte /> </MainLayout> : <Navigate replace to="/" /> },
     { path: "/mathevierte", element: isLoggedIn ? <MainLayout> <Mathevierte /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/englisch", element: isLoggedIn ? <MainLayout> <English /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/englischerste", element: isLoggedIn ? <MainLayout> <FirstGradeEnglishTopics /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/englsichzweite", element: isLoggedIn ? <MainLayout> <SecondGradeActivity /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/englischdritte", element: isLoggedIn ? <MainLayout> <ThirdGradeEnglishAdventure /> </MainLayout> : <Navigate replace to="/" /> },
+    { path: "/englischvierte", element: isLoggedIn ? <MainLayout> <FourthGradeStoryBuilder /> </MainLayout> : <Navigate replace to="/" /> },
   ]);
 }
 

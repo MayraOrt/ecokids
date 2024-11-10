@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.btn-primary {
+    @apply p-2 bg-teal-400 text-white rounded-md hover:bg-purple-300 transition-colors;
+}
+
+.btn-secondary {
+    @apply p-2 bg-orange-400 text-white rounded-md hover:bg-purple-300 transition-colors;
+}

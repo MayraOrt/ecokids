@@ -1,6 +1,5 @@
 .menu-container{
     display: flex;
-    justify-content: space-between;
     align-items: center;
     background-color: #F5F5F5;
     padding: 10px 20px;
@@ -12,15 +11,18 @@
     gap: 25px;
 }
 
-.navbar-logo{
+.navbar-logo {
     height: 55px;
-    width: 55px;
     display: flex;
     align-items: center;
     font-size: 20px;
     font-weight: 500;
     font-family: "Poppins", sans-serif;
     color: #186860;
+}
+
+.navbar-logo img {
+    width: 55px;
 }
 
 

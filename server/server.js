@@ -32,6 +32,25 @@ connection.connect((err) => {
 
 const JWT_SECRET = 'oekohelden';
 
+//----------------------------------------------- MIDDLEWARE
+
+const verifyToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ error: 'Kein Token bereitgestellt' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    return res.status(403).json({ error: 'Ungültiger Token' });
+  }
+};
+
 //----------------------------------------------- LOGIN
 
 app.post('/register', async (req, res) => {
@@ -100,24 +119,75 @@ app.post('/login', (req, res) => {
   });
 });
 
-//----------------------------------------------- MIDDLEWARE
+//----------------------------------------------- USERS
 
-const verifyToken = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+// Get all students (non-teacher users) with their class information
+app.get('/users/students', verifyToken, (req, res) => {
+  const query = `
+    SELECT 
+      u.id,
+      u.first_name,
+      u.last_name,
+      u.email,
+      c.level,
+      c.id as class_id,
+      c.name as class_name
+    FROM users u
+    LEFT JOIN user_classes uc ON u.id = uc.user_id
+    LEFT JOIN classes c ON uc.class_id = c.id
+    WHERE u.is_teacher = false
+    ORDER BY u.last_name, u.first_name
+  `;
 
-  if (!token) {
-    return res.status(401).json({ error: 'Kein Token bereitgestellt' });
-  }
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error('Fehler beim Abrufen der Schüler:', err);
+      return res.status(500).json({ error: 'Datenbankfehler' });
+    }
 
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded;
-    next();
-  } catch (error) {
-    return res.status(403).json({ error: 'Ungültiger Token' });
-  }
-};
+    res.json({
+      success: true,
+      data: results
+    });
+  });
+});
+
+
+// EDIT an existing user
+app.put('/users/update/:id', verifyToken, (req, res) => {
+  const { first_name, last_name, email, class_level, is_teacher } = req.body;
+  const { id } = req.params;
+
+  const query = 'UPDATE users SET first_name = ?, last_name = ?, email = ?, class_level = ?, is_teacher = ? WHERE id = ?';
+  connection.query(query, [first_name, last_name, email, class_level, is_teacher ? true : false, id], (err, result) => {
+    if (err) {
+      console.error('Fehler beim Aktualisieren des Benutzers:', err);
+      return res.status(500).json({ error: 'Datenbankfehler' });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Benutzer nicht gefunden' });
+    }
+    res.json({ message: 'Benutzer erfolgreich aktualisiert' });
+  });
+});
+
+// DELETE an existing user
+app.delete('/users/delete/:id', verifyToken, (req, res) => {
+  const { id } = req.params;
+
+  const query = 'DELETE FROM users WHERE id = ?';
+  connection.query(query, [id], (err, result) => {
+    if (err) {
+      console.error('Fehler beim Löschen des Benutzers:', err);
+      return res.status(500).json({ error: 'Datenbankfehler' });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Benutzer nicht gefunden' });
+    }
+    res.json({ message: 'Benutzer erfolgreich gelöscht' });
+  });
+});
+
 
 //----------------------------------------------- CLASSES
 
@@ -160,7 +230,7 @@ app.post('/classes/create', verifyToken, (req, res) => {
   });
 });
 
-// GET all
+// GET all classes
 app.get('/classes/all', verifyToken, (req, res) => {
   const query = 'SELECT * FROM classes ORDER BY level, name';
 
@@ -177,7 +247,7 @@ app.get('/classes/all', verifyToken, (req, res) => {
   });
 });
 
-// GET single class
+// GET single class by id
 app.get('/classes/byId/:id', verifyToken, (req, res) => {
   const query = 'SELECT * FROM classes WHERE id = ?';
 
@@ -274,6 +344,168 @@ app.delete('/classes/:id', verifyToken, (req, res) => {
     res.json({
       success: true,
       message: 'Klasse erfolgreich gelöscht'
+    });
+  });
+});
+
+
+//----------------------------------------------- STUDENT - CLASS
+
+// Assign user to class
+app.post('/user-classes/assign', verifyToken, (req, res) => {
+  if (!req.user.isTeacher) {
+    return res.status(403).json({
+      success: false,
+      error: 'Nur Lehrer können Benutzer zu Klassen zuweisen'
+    });
+  }
+
+  const { userId, classId } = req.body;
+
+  if (!userId || !classId) {
+    return res.status(400).json({
+      success: false,
+      error: 'Benutzer-ID und Klassen-ID sind erforderlich'
+    });
+  }
+
+  const query = 'INSERT INTO user_classes (user_id, class_id) VALUES (?, ?)';
+  
+  connection.query(query, [userId, classId], (err, result) => {
+    if (err) {
+      console.error('Fehler beim Zuweisen des Benutzers zur Klasse:', err);
+      return res.status(500).json({ error: 'Datenbankfehler' });
+    }
+
+    res.status(201).json({
+      success: true,
+      message: 'Benutzer erfolgreich zur Klasse zugewiesen'
+    });
+  });
+});
+
+// Remove user from class
+app.delete('/user-classes/remove', verifyToken, (req, res) => {
+  if (!req.user.isTeacher) {
+    return res.status(403).json({
+      success: false,
+      error: 'Nur Lehrer können Benutzer aus Klassen entfernen'
+    });
+  }
+
+  const { userId, classId } = req.body;
+
+  const query = 'DELETE FROM user_classes WHERE user_id = ? AND class_id = ?';
+
+  connection.query(query, [userId, classId], (err, result) => {
+    if (err) {
+      console.error('Fehler beim Entfernen des Benutzers aus der Klasse:', err);
+      return res.status(500).json({ error: 'Datenbankfehler' });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'Benutzer-Klassen-Zuordnung nicht gefunden'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Benutzer erfolgreich aus der Klasse entfernt'
+    });
+  });
+});
+
+// Update user-class relationship
+app.put('/user-classes/update', verifyToken, (req, res) => {
+  if (!req.user.isTeacher) {
+    return res.status(403).json({
+      success: false,
+      error: 'Nur Lehrer können Benutzer-Klassen-Zuordnungen aktualisieren'
+    });
+  }
+
+  const { userId, oldClassId, newClassId } = req.body;
+
+  if (!userId || !oldClassId || !newClassId) {
+    return res.status(400).json({
+      success: false,
+      error: 'Alle IDs sind erforderlich'
+    });
+  }
+
+  const query = 'UPDATE user_classes SET class_id = ? WHERE user_id = ? AND class_id = ?';
+
+  connection.query(query, [newClassId, userId, oldClassId], (err, result) => {
+    if (err) {
+      console.error('Fehler beim Aktualisieren der Benutzer-Klassen-Zuordnung:', err);
+      return res.status(500).json({ error: 'Datenbankfehler' });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'Benutzer-Klassen-Zuordnung nicht gefunden'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Benutzer-Klassen-Zuordnung erfolgreich aktualisiert'
+    });
+  });
+});
+
+// GET the first class for a specific user by user ID
+app.get('/user-classes/:userId/class', verifyToken, (req, res) => {
+  const { userId } = req.params;
+
+  const query = `
+    SELECT 
+      c.id AS class_id,
+      c.name AS class_name,
+      c.level
+    FROM classes c
+    JOIN user_classes uc ON c.id = uc.class_id
+    WHERE uc.user_id = ?
+    ORDER BY c.id ASC
+    LIMIT 1
+  `;
+
+  connection.query(query, [userId], (err, results) => {
+    if (err) {
+      console.error('Fehler beim Abrufen der Klasse des Benutzers:', err);
+      return res.status(500).json({ error: 'Datenbankfehler' });
+    }
+
+    //if the user doesnt has a class then we send null
+    res.json({
+      success: true,
+      data: results[0] || null
+    });
+  });
+});
+
+// Get all users in a class
+app.get('/user-classes/class/:classId', verifyToken, (req, res) => {
+  const query = `
+    SELECT u.id, u.first_name, u.last_name, u.email, u.class_level, u.is_teacher 
+    FROM users u
+    JOIN user_classes uc ON u.id = uc.user_id
+    WHERE uc.class_id = ?
+    ORDER BY u.last_name, u.first_name
+  `;
+
+  connection.query(query, [req.params.classId], (err, results) => {
+    if (err) {
+      console.error('Fehler beim Abrufen der Benutzer in der Klasse:', err);
+      return res.status(500).json({ error: 'Datenbankfehler' });
+    }
+
+    res.json({
+      success: true,
+      data: results
     });
   });
 });

@@ -1,4 +1,15 @@
+import { useContext } from "react";
+import { SessionContext } from "../contexts/SessionContext";
+
 function DashboardPage() {
+  const {session} = useContext(SessionContext); 
+
+  if(!session.isTeacher && !session.userClass) {
+    return <div className="h-96 w-full bg-red-100 p-32 text-center text-2xl">
+      Sie sind noch keiner Klasse zugeteilt. <br/> Sprechen Sie mit Ihrem Lehrer, <br/> um die Aktivitäten und Übungen zu sehen.
+      </div>
+  }
+
   return (
     <div
       className="main-container bg-contain bg-center flex flex-col items-center min-h-screen mx-auto px-10"

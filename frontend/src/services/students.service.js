@@ -50,5 +50,10 @@ export const studentsService = {
       newClassId
     });
     return response.data;
+  },
+
+  getClassByStudentId: async (userId) => {
+    const response = await httpClient.get(`${USER_CLASSES_URL}/${userId}/class`);
+    return response.data;
   }
 };

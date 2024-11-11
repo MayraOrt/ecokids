@@ -25,7 +25,7 @@ const LoginPage = () => {
 
       if (response.status === 200 && response.data.token) {
         localStorage.setItem('ecotoken', response.data.token);
-        const session = checkSession();
+        const session = await checkSession();
         navigate(session.isTeacher ? '/lehrerdash': '/dashboard');
       } else {
         setError('Unerwartete Serverantwort. Bitte versuchen Sie es erneut.');

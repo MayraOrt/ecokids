@@ -1,5 +1,6 @@
 import { createContext, useCallback, useEffect, useState } from "react"
 import { jwtDecode } from "jwt-decode";
+import { studentsService } from "../services/students.service";
 
 export const SessionContext = createContext({
     session: null,
@@ -15,11 +16,12 @@ export const SessionProvider = ({children}) => {
         firstName: null,
         lastName: null,
         isTeacher: false,
+        userClass: null
     })
 
     const [isLoading, setIsLoading] = useState(true);
 
-    const checkSession = useCallback(() => {
+    const checkSession = useCallback(async () => {
         setIsLoading(true);
         const token = localStorage.getItem('ecotoken');
         let decoded = null;
@@ -33,20 +35,29 @@ export const SessionProvider = ({children}) => {
         let session;
 
         if (decoded) {
+          let userClass;
+          if (!decoded.isTeacher && decoded.userId) {
+            userClass = await studentsService.getClassByStudentId(decoded.userId);
+          }
+          
           session = {
             active: true,
             firstName: decoded.firstName || 'user',
             lastName: decoded.lastName || '',
             isTeacher: decoded.isTeacher ? true : false, 
+            userClass: userClass?.data || null
           };
         } else {
           session = {
             active: false,
             firstName: null,
             lastName: null,
-            isTeacher: false
+            isTeacher: false,
+            userClass: null
           };
         }
+
+
 
         setSession(session)
         setIsLoading(false);

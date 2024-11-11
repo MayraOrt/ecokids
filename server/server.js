@@ -230,7 +230,7 @@ app.post('/classes/create', verifyToken, (req, res) => {
   });
 });
 
-// GET all
+// GET all classes
 app.get('/classes/all', verifyToken, (req, res) => {
   const query = 'SELECT * FROM classes ORDER BY level, name';
 
@@ -247,7 +247,7 @@ app.get('/classes/all', verifyToken, (req, res) => {
   });
 });
 
-// GET single class
+// GET single class by id
 app.get('/classes/byId/:id', verifyToken, (req, res) => {
   const query = 'SELECT * FROM classes WHERE id = ?';
 
@@ -347,6 +347,7 @@ app.delete('/classes/:id', verifyToken, (req, res) => {
     });
   });
 });
+
 
 //----------------------------------------------- STUDENT - CLASS
 
@@ -456,25 +457,32 @@ app.put('/user-classes/update', verifyToken, (req, res) => {
   });
 });
 
-// Get all classes for a user
-app.get('/user-classes/user/:userId', verifyToken, (req, res) => {
+// GET the first class for a specific user by user ID
+app.get('/user-classes/:userId/class', verifyToken, (req, res) => {
+  const { userId } = req.params;
+
   const query = `
-    SELECT c.* 
+    SELECT 
+      c.id AS class_id,
+      c.name AS class_name,
+      c.level
     FROM classes c
     JOIN user_classes uc ON c.id = uc.class_id
     WHERE uc.user_id = ?
-    ORDER BY c.level, c.name
+    ORDER BY c.id ASC
+    LIMIT 1
   `;
 
-  connection.query(query, [req.params.userId], (err, results) => {
+  connection.query(query, [userId], (err, results) => {
     if (err) {
-      console.error('Fehler beim Abrufen der Klassen des Benutzers:', err);
+      console.error('Fehler beim Abrufen der Klasse des Benutzers:', err);
       return res.status(500).json({ error: 'Datenbankfehler' });
     }
 
+    //if the user doesnt has a class then we send null
     res.json({
       success: true,
-      data: results
+      data: results[0] || null
     });
   });
 });

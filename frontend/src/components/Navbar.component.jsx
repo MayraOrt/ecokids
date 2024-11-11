@@ -14,7 +14,8 @@ const Navbar = () => {
       active: false,
       firstName: null,
       lastName: null,
-      isTeacher: false
+      isTeacher: false,
+      userClass: null
     })
     navigate('/');
   }
@@ -51,7 +52,8 @@ const Navbar = () => {
                 <div>
                   {session.firstName + ' ' + session.lastName}
                   <div className='text-xs'>
-                    {session.isTeacher ? 'Lehrer' : 'Schuler'}
+                    {session.isTeacher && 'Lehrer'} 
+                    {!session.isTeacher && <span>Schuler ({session.userClass && session.userClass.class_name || 'Keine zugewiessene Klasse'})</span>} 
                   </div>
                   </div>
               </div>

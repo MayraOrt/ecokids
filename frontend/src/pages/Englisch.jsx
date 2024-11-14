@@ -37,7 +37,7 @@ function English(){
           </Link>
 
           <Link
-            to="/englsichzweite"
+            to="/englischzweite"
             className="border-2 border-rose-600 shadow-md rounded-xl p-4 flex flex-col items-center text-stone-800"
           >
             <div className="flex gap-5 justify-between w-full font-bold text-2xl text-center">
@@ -57,7 +57,7 @@ function English(){
           </Link>
 
           <Link
-            to="/englsichdritte"
+            to="/englischdritte"
             className="border-2 border-blue-400 shadow-md rounded-xl p-4 flex flex-col items-center text-stone-800"
           >
             <div className="flex flex-col justify-between h-full w-full">
